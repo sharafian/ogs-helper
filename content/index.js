@@ -1,3 +1,9 @@
+function debug ({ debug }, ...message) {
+	if (debug) {
+		console.log('ogs-helper:', ...message)
+	}
+}
+
 function exitAnalyzeMode () {
 	iter = document.evaluate("//*[contains(text(), 'Back to Game')]", document.body, null, XPathResult.ANY_TYPE);
 	const button = iter && iter.iterateNext()
@@ -90,6 +96,23 @@ function disableThinkButton () {
 	setPointerEventsDisabled(false)
 }
 
+function debounce (cb, options, timeout) {
+	let timer
+
+	return (...args) => {
+		if (timer) {
+			debug(options, 'debouncing call')
+			clearTimeout(timer)
+		}
+		timer = setTimeout(() => {
+			debug(options, 'made debounced call')
+			timer = undefined
+			cb(...args)
+		}, timeout)
+	}
+}
+
+let observer
 async function init () {
 	const options = await browser.storage.sync.get(null)
 
@@ -99,8 +122,9 @@ async function init () {
 		Object.assign(options, newOptions)
 	}, 1000)
 
-	const mainArea = document.querySelector('.MainGobanView')
-	const observer = new MutationObserver(() => {
+	const mainArea = document.body
+	observer = new MutationObserver(debounce(() => {
+		debug(options, 'detected mutation; refreshing')
 		try {
 			if (options.noAnalyze) exitAnalyzeMode()
 
@@ -109,7 +133,7 @@ async function init () {
 		} catch (e) {
 			console.error(e)
 		}
-	})
+	}, options, 10))
 
 	observer.observe(mainArea, {
 		childList: true,
@@ -120,6 +144,9 @@ async function init () {
 
 function cleanUp () {
 	disableThinkButton()
+	if (observer) {
+		observer.disconnect()
+	}
 }
 
 cleanUp()
