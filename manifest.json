@@ -1,7 +1,7 @@
 {
   "browser_specific_settings": {
     "gecko": {
-      "id": "addon@example.com",
+      "id": "ogs-helper@sharafian.com",
       "strict_min_version": "42.0"
     }
   },
@@ -15,17 +15,7 @@
       "38": "img/go-38.png"
     },
     "default_title": "OGS Helper",
-    "default_popup": "popup/index.html"
-  },
-
-  "commands": {
-    "toggle-feature": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+Y",
-        "linux": "Ctrl+Shift+U"
-      },
-      "description": "Send a 'toggle-feature' event"
-    }
+    "default_popup": "options/index.html"
   },
 
   "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
@@ -33,7 +23,8 @@
   "content_scripts": [
     {
       "matches": ["*://online-go.com/*"],
-      "js": ["content/index.js"]
+      "js": ["content/index.js"],
+			"css": ["content/ogs-helper.css"]
     }
   ],
 
@@ -43,11 +34,15 @@
     "96": "img/icon2x.png"
   },
 
+	"options_ui": {
+		"page": "options/index.html"
+	},
+
   "manifest_version": 2,
 
   "name": "OGS Helper",
 
-  "permissions": ["webNavigation", "https://online-go.com/"],
+  "permissions": ["storage", "https://online-go.com/"],
 
   "version": "0.1"
 }

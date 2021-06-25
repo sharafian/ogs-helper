@@ -1,0 +1,10 @@
+#ogs-helper-timer {
+	position: fixed;
+	left: 0px;
+	background-color: #fff;
+	font-size: 24pt;
+	border: solid #000 1px;
+	padding: 4px;
+	width: 2em;
+	text-align: center;
+}
