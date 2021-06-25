@@ -12,7 +12,7 @@
 
   "browser_action": {
     "default_icon": {
-      "38": "img/button/go-38.png"
+      "38": "img/go-38.png"
     },
     "default_title": "OGS Helper",
     "default_popup": "popup/index.html"
@@ -32,26 +32,22 @@
 
   "content_scripts": [
     {
-      "exclude_matches": ["*://developer.mozilla.org/*"],
-      "matches": ["*://online-go.com/game/*"],
+      "matches": ["*://online-go.com/*"],
       "js": ["content/index.js"]
     }
   ],
 
-  "default_locale": "en",
-
-  "description": "...",
+  "description": "Make some little improvements to OGS to help your go",
 
   "icons": {
-    "48": "img/icon.png",
     "96": "img/icon2x.png"
   },
 
   "manifest_version": 2,
 
-  "name": "...",
+  "name": "OGS Helper",
 
-  "permissions": ["webNavigation", "https://online-go.com"],
+  "permissions": ["webNavigation", "https://online-go.com/"],
 
-  "version": "0.1",
+  "version": "0.1"
 }

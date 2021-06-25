@@ -1,3 +1,4 @@
 #!/bin/bash
 
-zip ogs-helper.xpi -r .
+rm ogs-helper.xpi
+zip ogs-helper.xpi -r . --exclude "*/.git/*"
