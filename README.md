@@ -1,3 +1,5 @@
+![logo](./img/icon2x.png)
+
 # OGS Helper
 
 This is a browser extension that implements some additional features/settings that I want to use on [OGS](https://online-go.com).

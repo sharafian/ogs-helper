@@ -12,7 +12,7 @@
 
   "browser_action": {
     "default_icon": {
-      "38": "img/go-38.png"
+      "96": "img/icon2x.png"
     },
     "default_title": "OGS Helper",
     "default_popup": "options/index.html"
