@@ -22,8 +22,8 @@ If the timeout needs to be stopped, you can simply reload the page or open the e
 
 # TODOs
 
-- [ ] Use a non-interval based way of adding button/toggling analyze mode
-- [ ] Subscribe to settings updates instead of polling
+- [x] Use a non-interval based way of adding button/toggling analyze mode
+- [ ] Use message passing instead of polling to propagate settings changes
 - [ ] Publish to webstores (FF and chrome should be enough)
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier

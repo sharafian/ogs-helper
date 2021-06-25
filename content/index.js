@@ -96,14 +96,14 @@ async function init () {
 	const options = await browser.storage.sync.get(null)
 	console.log('ogs-helper: loaded options', options)
 
-	// TODO: listen for storage changes?
+	// TODO: do a background-based message pass instead
 	setInterval(async () => {
 		const newOptions = await browser.storage.sync.get(null)
 		Object.assign(options, newOptions)
 	}, 1000)
 
-	// TODO: do this on a mutation event instead
-	setInterval(() => {
+	const mainArea = document.querySelector('.MainGobanView')
+	const observer = new MutationObserver(() => {
 		try {
 			if (options.noAnalyze) exitAnalyzeMode()
 
@@ -112,7 +112,13 @@ async function init () {
 		} catch (e) {
 			console.error(e)
 		}
-	}, 100)
+	})
+
+	observer.observe(mainArea, {
+		childList: true,
+		subtree: true,
+		attributes: true
+	})
 }
 
 function cleanUp () {
