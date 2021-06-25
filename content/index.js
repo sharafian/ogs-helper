@@ -1,5 +1,3 @@
-console.log('ogs-helper: hello world!')
-
 function exitAnalyzeMode () {
 	iter = document.evaluate("//*[contains(text(), 'Back to Game')]", document.body, null, XPathResult.ANY_TYPE);
 	const button = iter && iter.iterateNext()
@@ -94,7 +92,6 @@ function disableThinkButton () {
 
 async function init () {
 	const options = await browser.storage.sync.get(null)
-	console.log('ogs-helper: loaded options', options)
 
 	// TODO: do a background-based message pass instead
 	setInterval(async () => {
