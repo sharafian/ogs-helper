@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "matches": ["*://online-go.com/*"],
-      "js": ["content/index.js"],
+      "js": ["browser-polyfill.min.js", "content/index.js"],
 			"css": ["content/ogs-helper.css"]
     }
   ],
