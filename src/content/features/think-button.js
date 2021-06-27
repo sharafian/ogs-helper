@@ -15,8 +15,13 @@ function setThinkButtonDisabled (state) {
 	}
 }
 
-function thinkMode ({ thinkTime }) {
+// Export because analyzeToThink feature uses this in no-analyze
+export function thinkMode ({ thinkTime }) {
 	let counter = thinkTime || 60
+
+	if (document.getElementById(timer_id)) {
+		return
+	}
 
 	const timerDiv = document.createElement('div')
 	timerDiv.id = timer_id
@@ -56,7 +61,7 @@ function removeTimer () {
 	if (timer) timer.remove()
 }
 
-function addThinkButton (thinkTime) {
+function addThinkButton (options) {
 	const thinkInserted = document.getElementById(think_id)
 	if (thinkInserted) {
 		return
@@ -72,7 +77,7 @@ function addThinkButton (thinkTime) {
 	button.innerText = 'Think'
 	button.id = think_id
 	button.disabled = !!document.getElementById(timer_id)
-	button.onclick = thinkMode.bind(null, thinkTime)
+	button.onclick = thinkMode.bind(null, options)
 	parentSpan.insertBefore(button, parentSpan.firstChild)
 }
 
@@ -81,20 +86,22 @@ function removeThinkButton () {
 	if (think) think.remove()
 }
 
-function disableThinkButton () {
+function disableThinkButton (options) {
 	removeThinkButton()
-	removeTimer()
-	setPointerEventsDisabled(false)
+	if (!options.analyzeToThink) {
+		removeTimer()
+		setPointerEventsDisabled(false)
+	}
 }
 
 export function onPlayAreaMutation (options) {
 	if (options.thinkButton) {
 		addThinkButton(options)
 	} else {
-		disableThinkButton()
+		disableThinkButton(options)
 	}
 }
 
 export function cleanUp () {
-	disableThinkButton()
+	disableThinkButton({})
 }

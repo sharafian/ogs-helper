@@ -1,4 +1,5 @@
-const optionNames = [ 'noAnalyze', 'thinkButton', 'thinkTime' ]
+const optionNames = Array.from(document.querySelectorAll('#options input')).map(elem => elem.id)
+console.log('loaded options', optionNames)
 
 function valueField (element) {
 	if (element.type === 'checkbox') return 'checked'

@@ -25,9 +25,9 @@ If the timeout needs to be stopped, you can simply reload the page or open the e
 # TODOs
 
 - [x] Use a non-interval based way of adding button/toggling analyze mode
-- [ ] Disable analyze mode should only apply during a game in progress--not after it's done
+- [x] Disable analyze mode should only apply during a game in progress--not after it's done
 - [ ] Use message passing instead of polling to propagate settings changes
 - [ ] Publish to webstores (FF and chrome should be enough)
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier
-- [ ] Option to replace Analyze mode with think mode
+- [x] Option to replace Analyze mode with think mode
