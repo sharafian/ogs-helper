@@ -1,4 +1,4 @@
-![logo](./img/icon2x.png)
+![logo](./resources/img/icon128.png)
 
 # OGS Helper
 
@@ -21,6 +21,15 @@ When the "Think" button is pressed, the board is locked for a minute (this timeo
 prevent hasty moves. A timeout in the upper left will show remaining seconds.
 
 If the timeout needs to be stopped, you can simply reload the page or open the extension popup and disable the "Think" button.
+
+## Replace Analyze with Think
+
+When the extension detects you've entered analyze mode it exits and puts you in think mode instead, locking the board in order to force you to read.
+
+## Think, Mark, Think!
+
+[Inserts this meme](https://knowyourmeme.com/memes/think-mark) when entering think mode. This is basically a joke feature but I find it pretty amusing
+when combined with "Replace Analyze with Think." So maybe I'll keep it in.
 
 # TODOs
 
