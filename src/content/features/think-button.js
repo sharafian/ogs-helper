@@ -100,10 +100,16 @@ function removeThinkButton () {
 	if (think) think.remove()
 }
 
+function removeThinkMeme () {
+	const meme = document.getElementById(think_meme_id)
+	if (meme) think.remove()
+}
+
 function disableThinkButton (options) {
 	removeThinkButton()
 	if (!options.analyzeToThink) {
 		removeTimer()
+		removeThinkMeme()
 		setPointerEventsDisabled(false)
 	}
 }
