@@ -1,5 +1,7 @@
 const think_id = 'ogs-helper-thinking-button'
 const timer_id = 'ogs-helper-timer'
+const think_meme_id = 'ogs-helper-think-meme'
+const think_meme_time = 2500
 
 function setPointerEventsDisabled (state) {
 	const goban = document.querySelector('div.Goban:nth-child(1)')
@@ -16,7 +18,7 @@ function setThinkButtonDisabled (state) {
 }
 
 // Export because analyzeToThink feature uses this in no-analyze
-export function thinkMode ({ thinkTime }) {
+export function thinkMode ({ thinkTime, thinkMarkThink }) {
 	let counter = thinkTime || 60
 
 	if (document.getElementById(timer_id)) {
@@ -28,6 +30,18 @@ export function thinkMode ({ thinkTime }) {
 	timerDiv.style.top = document.getElementById('NavBar').offsetHeight + 'px'
 	timerDiv.innerText = counter
 	document.body.appendChild(timerDiv)
+
+	if (thinkMarkThink) {
+		if (!document.getElementById(think_meme_id)) {
+			const img = document.createElement('img')
+			img.src = 'https://i.kym-cdn.com/photos/images/original/002/090/663/33c.png'
+			img.id = think_meme_id
+			document.body.appendChild(img)
+			setTimeout(() => {
+				img.remove()
+			}, think_meme_time)
+		}
+	}
 
 	setThinkButtonDisabled(true)
 	setPointerEventsDisabled(true)

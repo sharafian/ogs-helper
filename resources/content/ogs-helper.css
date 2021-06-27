@@ -8,3 +8,14 @@
 	width: 2em;
 	text-align: center;
 }
+
+#ogs-helper-think-meme {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-top: -135px;
+	margin-left: -355px;
+	height: 365px;
+	width: 710px;
+	z-index: 1050;
+}
