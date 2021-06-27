@@ -4,17 +4,28 @@ function debug ({ debug }, ...message) {
 	}
 }
 
-function exitAnalyzeMode () {
-	iter = document.evaluate("//*[contains(text(), 'Back to Game')]", document.body, null, XPathResult.ANY_TYPE);
+function isGameActive () {
+	iter = document.evaluate("//button[contains(text(), 'Rematch')]", document.body, null, XPathResult.ANY_TYPE);
 	const button = iter && iter.iterateNext()
-	if (button) button.click()
+	return !button
+}
+
+function exitAnalyzeMode () {
+	if (isGameActive()) {
+		iter = document.evaluate("//button[contains(text(), 'Back to Game')]", document.body, null, XPathResult.ANY_TYPE);
+		const button = iter && iter.iterateNext()
+		if (button) button.click()
+	}
 }
 
 const think_id = 'ogs-helper-thinking-button'
 const timer_id = 'ogs-helper-timer'
 
 function setPointerEventsDisabled (state) {
-	document.querySelector('div.Goban:nth-child(1)').style.pointerEvents = state ? 'none' : ''
+	const goban = document.querySelector('div.Goban:nth-child(1)')
+	if (goban) {
+		goban.style.pointerEvents = state ? 'none' : ''
+	}
 }
 
 function setThinkButtonDisabled (state) {
@@ -98,40 +109,89 @@ function disableThinkButton () {
 
 let observer
 
-async function init () {
-	const options = await browser.storage.sync.get(null)
+function setUpPlayArea (options) {
+	debug(options, 'detected mutation; refreshing')
+	try {
+		if (options.noAnalyze) exitAnalyzeMode()
 
-	// TODO: do a background-based message pass instead
-	setInterval(async () => {
-		const newOptions = await browser.storage.sync.get(null)
-		Object.assign(options, newOptions)
-	}, 1000)
+		if (options.thinkButton) addThinkButton(options)
+		else disableThinkButton()
+	} catch (e) {
+		console.error(e)
+	}
+}
 
-	const mainArea = document.body
-	observer = new MutationObserver(() => {
-		debug(options, 'detected mutation; refreshing')
-		try {
-			if (options.noAnalyze) exitAnalyzeMode()
+function isInGame () {
+	return document.location.pathname.startsWith('/game/')
+}
 
-			if (options.thinkButton) addThinkButton(options)
-			else disableThinkButton()
-		} catch (e) {
-			console.error(e)
-		}
-	})
+function watchMutations (options, cb) {
+	stopWatchingMutations()
 
-	observer.observe(mainArea, {
+	const playArea = document.querySelector('.play-controls')
+	if (!playArea) {
+		debug(options, 'not in play, no watch for mutations')
+		return
+	}
+
+	observer = new MutationObserver(cb)
+
+	observer.observe(playArea, {
 		childList: true,
 		subtree: true,
 		attributes: true
 	})
+
+	cb()
+}
+
+function stopWatchingMutations () {
+	if (observer) {
+		observer.disconnect()
+	}
+}
+
+function containsUpdate (old, updated) {
+	for (const key of Object.keys(updated)) {
+		if (updated[key] !== old[key]) {
+			return true
+		}
+	}
+}
+
+async function init () {
+	const options = await browser.storage.sync.get(null)
+	let currentUrl = window.location.href
+
+	// TODO: do a background-based message pass instead
+	setInterval(async () => {
+		const newOptions = await browser.storage.sync.get(null)
+		if (containsUpdate(options, newOptions)) {
+			Object.assign(options, newOptions)
+			setUpPlayArea(options)
+		}
+
+		if (currentUrl !== (currentUrl = window.location.href)) {
+			if (isInGame()) {
+				debug(options, 'Entered game; watching for mutations on play area')
+				watchMutations(options, setUpPlayArea.bind(null, options))
+			} else {
+				debug(options, 'Not in game; disabling mutation watcher')
+				stopWatchingMutations()
+			}
+		}
+	}, 1000)
+
+	if (isInGame()) {
+		watchMutations(options, setUpPlayArea.bind(null, options))
+	}
+
+	debug(options, 'initialized; ready to go!')
 }
 
 function cleanUp () {
 	disableThinkButton()
-	if (observer) {
-		observer.disconnect()
-	}
+	stopWatchingMutations()
 }
 
 cleanUp()

@@ -30,3 +30,4 @@ If the timeout needs to be stopped, you can simply reload the page or open the e
 - [ ] Publish to webstores (FF and chrome should be enough)
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier
+- [ ] Option to replace Analyze mode with think mode
