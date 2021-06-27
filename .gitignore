@@ -1,1 +1,3 @@
 ogs-helper.xpi
+dist/
+node_modules/
