@@ -12,7 +12,7 @@
 
   "browser_action": {
     "default_icon": {
-      "96": "img/icon2x.png"
+      "128": "img/icon128.png"
     },
     "default_title": "OGS Helper",
     "default_popup": "options/index.html"
@@ -31,7 +31,7 @@
   "description": "Make some little improvements to OGS to help your go",
 
   "icons": {
-    "96": "img/icon2x.png"
+    "128": "img/icon128.png"
   },
 
 	"options_ui": {
