@@ -5,6 +5,10 @@ function isInGame () {
 	return document.location.pathname.startsWith('/game/')
 }
 
+function getDimensions () {
+	return `${window.innerWidth}:${window.innerHeight}`
+}
+
 async function loadOptions () {
 	return browser.storage.sync.get(null)
 }
@@ -15,6 +19,7 @@ async function init () {
 
 	const options = await loadOptions()
 	let currentUrl = window.location.href
+	let dimensions = getDimensions()
 	let observer
 
 	while (true) {
@@ -34,6 +39,9 @@ async function init () {
 				Object.assign(options, newOptions)
 				break
 			} else if (currentUrl !== (currentUrl = window.location.href)) {
+				break
+			// Re-establish play area features when window is resized; sometimes it was causing buttons to disappear
+			} else if (dimensions !== (dimensions = getDimensions())) {
 				break
 			} else {
 				await wait(1000)
