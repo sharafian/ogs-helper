@@ -36,7 +36,7 @@ when combined with "Replace Analyze with Think." So maybe I'll keep it in.
 - [x] Use a non-interval based way of adding button/toggling analyze mode
 - [x] Disable analyze mode should only apply during a game in progress--not after it's done
 - [ ] Use message passing instead of polling to propagate settings changes
-- [ ] Publish to webstores (FF and chrome should be enough)
+- [x] Publish to webstores (FF and chrome should be enough)
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier
 - [x] Option to replace Analyze mode with think mode
