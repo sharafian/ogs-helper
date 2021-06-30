@@ -6,3 +6,7 @@
 input {
 	margin-left: 4px;
 }
+
+.secret {
+	display: none;
+}

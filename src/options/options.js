@@ -21,6 +21,29 @@ async function restoreOptions () {
 	})
 }
 
+async function watchForSecretOptions () {
+	let lastClick = 0
+	let consecutiveClicks = 0
+	let secretShown = false
+
+	document.body.addEventListener('click', () => {
+		if (secretShown) return
+
+		if (lastClick - (lastClick = Date.now()) < 500) {
+			consecutiveClicks++
+		} else {
+			consecutiveClicks = 0
+		}
+
+		if (consecutiveClicks >= 5) {
+			Array.from(document.querySelectorAll('.secret')).forEach(el => {
+				el.style.display = 'block'
+			})
+			secretShown = true
+		}
+	})
+}
+
 for (const key of optionNames) {
 	const field = document.getElementById(key)
 	field.addEventListener('change', () => {
@@ -30,4 +53,5 @@ for (const key of optionNames) {
 	})
 }
 
+watchForSecretOptions()
 restoreOptions()
