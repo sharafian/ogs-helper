@@ -15,7 +15,7 @@ async function loadOptions () {
 
 async function init () {
 	// Clean up elements left over from a previous version of the script
-	features.map(f => f.cleanUp?.())
+	features.map(f => f.cleanUp?.({}))
 
 	const options = await loadOptions()
 	let currentUrl = window.location.href
@@ -25,7 +25,7 @@ async function init () {
 	while (true) {
 		// On game page, activate features' handler when play area is changed so features can be injected
 		if (isInGame()) {
-			features.map(f => f.cleanUp?.())
+			features.map(f => f.cleanUp?.(options))
 			observer = watchMutations('.play-controls', () => {
 				features.map(f => f.onPlayAreaMutation?.(options))
 			})

@@ -13,7 +13,7 @@ async function restoreOptions () {
 
 	browser.storage.sync.get(null).then(options => {
 		for (const key of optionNames) {
-			if (options[key]) {
+			if (typeof options[key] !== 'undefined') {
 				const field = document.getElementById(key)
 				field[valueField(field)] = options[key]
 			}
