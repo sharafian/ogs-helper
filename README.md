@@ -35,3 +35,14 @@ When the extension detects you've entered analyze mode it exits and puts you in 
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier
 - [x] Option to replace Analyze mode with think mode
+
+## Build Instructions (for webstore reviewers)
+
+Build by running the following commands in this root of the source code zip:
+
+- `npm install` (you must have node.js installed)
+- `./build.sh`
+
+This creates ogs-helper.xpi.
+
+You can test the extension by going to https://online-go.com/observe-games and clicking one of the game boards. You should see a "Think" button on the right hand side under the players' names. This shows that the extension is working properly.
