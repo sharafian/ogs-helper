@@ -26,7 +26,7 @@
     }
   ],
 
-  "description": "Make some little improvements to OGS to help your go",
+  "description": "Add features to https://online-go.com to discourage bad habits",
 
   "icons": {
     "128": "img/icon128.png"
