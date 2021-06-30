@@ -115,13 +115,13 @@ function disableThinkButton (options) {
 }
 
 export function onPlayAreaMutation (options) {
-	if (options.thinkButton) {
+	if (options.thinkButton !== false) {
 		addThinkButton(options)
 	} else {
 		disableThinkButton(options)
 	}
 }
 
-export function cleanUp () {
-	disableThinkButton({})
+export function cleanUp (options) {
+	disableThinkButton(options)
 }
