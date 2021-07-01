@@ -29,11 +29,14 @@ async function watchForSecretOptions () {
   document.body.addEventListener('click', () => {
     if (secretShown) return
 
-    if (lastClick - (lastClick = Date.now()) < 500) {
+    const currentClick = Date.now()
+    if (currentClick - lastClick < 500) {
       consecutiveClicks++
     } else {
       consecutiveClicks = 0
     }
+
+    lastClick = currentClick
 
     if (consecutiveClicks >= 5) {
       Array.from(document.querySelectorAll('.secret')).forEach(el => {
