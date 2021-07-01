@@ -2,6 +2,9 @@
 
 # OGS Helper
 
+- [Install on Chrome](https://chrome.google.com/webstore/detail/ogs-helper/biiacfebamlnmhlnfccicadcgdbclmei)
+- [Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/ogs-helper)
+
 This is a browser extension that implements some additional features/settings that I want to use on [OGS](https://online-go.com).
 
 You can click the extension's icon to enable these features individually. The list of features is as follows:
