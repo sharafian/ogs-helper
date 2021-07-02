@@ -28,11 +28,11 @@ async function init () {
   let observer
 
   while (true) {
-    // On game page, activate features' handler when play area is changed so features can be injected
-
     let gameActive = true
+    features.map(f => f.cleanUp?.(options))
+
+    // On game page, activate features' handler when play area is changed so features can be injected
     if (isInGame() && isGameActive()) {
-      features.map(f => f.cleanUp?.(options))
       observer = watchMutations('.play-controls', () => {
         if (isGameActive()) {
           features.map(f => f.onPlayAreaMutation?.(options))
