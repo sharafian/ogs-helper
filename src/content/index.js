@@ -1,6 +1,11 @@
 import { watchMutations, wait, containsUpdate } from './utils/index'
 import { features } from './features/index.js'
 
+function isGameActive () {
+  const gameState = document.querySelector('.game-state')
+  return gameState && !gameState.innerText.includes('wins')
+}
+
 function isInGame () {
   return document.location.pathname.startsWith('/game/')
 }
@@ -24,10 +29,16 @@ async function init () {
 
   while (true) {
     // On game page, activate features' handler when play area is changed so features can be injected
-    if (isInGame()) {
+
+    let gameActive = true
+    if (isInGame() && isGameActive()) {
       features.map(f => f.cleanUp?.(options))
       observer = watchMutations('.play-controls', () => {
-        features.map(f => f.onPlayAreaMutation?.(options))
+        if (isGameActive()) {
+          features.map(f => f.onPlayAreaMutation?.(options))
+        } else {
+          gameActive = false
+        }
       })
     }
 
@@ -42,6 +53,8 @@ async function init () {
         break
       // Re-establish play area features when window is resized; sometimes it was causing buttons to disappear
       } else if (dimensions !== (dimensions = getDimensions())) {
+        break
+      } else if (!gameActive) {
         break
       } else {
         await wait(1000)
