@@ -1,4 +1,4 @@
-import { watchMutations, wait, containsUpdate } from './utils/index'
+import { watchMutations, wait } from './utils/index'
 import { features } from './features/index.js'
 
 function isGameActive () {
@@ -14,6 +14,17 @@ function getDimensions () {
   return `${window.innerWidth}:${window.innerHeight}`
 }
 
+function watchOptions (options, cb) {
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'sync') return
+    console.log('SYNC STORAGE CHANGED', changes)
+    for (const key of Object.keys(changes)) {
+      options[key] = changes[key].newValue
+    }
+    cb()
+  })
+}
+
 async function loadOptions () {
   return browser.storage.sync.get(null)
 }
@@ -22,7 +33,10 @@ async function init () {
   // Clean up elements left over from a previous version of the script
   features.map(f => f.cleanUp?.({}))
 
+  let optionsChanged = false
   const options = await loadOptions()
+  watchOptions(options, () => { optionsChanged = true })
+
   let currentUrl = window.location.href
   let dimensions = getDimensions()
   let observer
@@ -44,10 +58,8 @@ async function init () {
 
     // Wait for the options to change or the URL to change; currently this is a polling loop
     while (true) {
-      const newOptions = await loadOptions()
-
-      if (containsUpdate(options, newOptions)) {
-        Object.assign(options, newOptions)
+      if (optionsChanged) {
+        optionsChanged = false
         break
       } else if (currentUrl !== (currentUrl = window.location.href)) {
         break
