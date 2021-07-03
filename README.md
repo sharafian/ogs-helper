@@ -33,7 +33,7 @@ When the extension detects you've entered analyze mode it exits and puts you in 
 
 - [x] Use a non-interval based way of adding button/toggling analyze mode
 - [x] Disable analyze mode should only apply during a game in progress--not after it's done
-- [ ] Use message passing instead of polling to propagate settings changes
+- [x] Use message passing instead of polling to propagate settings changes
 - [x] Publish to webstores (FF and chrome should be enough)
 - [ ] Make the timer prettier
 - [ ] Make the options page prettier
